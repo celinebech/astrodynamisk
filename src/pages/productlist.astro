@@ -8,10 +8,8 @@ console.log(data);
 ---
 
 <Layout>
-  <main>
-    <h2>Produktliste</h2>
-    <section class="produkt-container">
-      {data.map((element) => <ProductCard data={element} />)}
-    </section>
-  </main>
+  <h2>Produktliste</h2>
+  <section class="produkt-container">
+    {data.map((element) => <ProductCard data={element} />)}
+  </section>
 </Layout>
