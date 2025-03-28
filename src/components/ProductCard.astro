@@ -26,6 +26,6 @@ const { data } = Astro.props;
     }
 
     <span class="current-price">{data.price - data.discount},-</span><br />
-    <a href="data.html?id=${data.id}">Read More</a>
+    <a href={`../product/${data.id}`}>Read More</a>
   </p>
 </article>
