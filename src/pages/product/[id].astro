@@ -1,0 +1,72 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const data = await fetch("https://kea-alt-del.dk/t7/api/products").then(
+    (response) => response.json()
+  );
+
+  return data.map((product) => {
+    return {
+      params: { id: product.id },
+      props: { product },
+    };
+  });
+}
+
+const { id } = Astro.params;
+const { product } = Astro.props;
+---
+
+<section class="produkt-container">
+  <section class="produkt-image product">
+    <img
+      src=`https://kea-alt-del.dk/t7/images/webp/640/${id}.webp`
+      alt="FERRARI BLACK ZIP-UP"
+    />
+
+    {
+      product.discount > 0 && (
+        <div class="badge discount">-{product.discount}%</div>
+      )
+    }
+
+    {product.soldout > 0 && <div class="badge sold-out">UDSOLGT</div>}
+  </section>
+
+  <section class="produkt-info">
+    <h1>Product Information</h1>
+    <p><strong>Model name</strong><br />{product.articletype}</p>
+    <p><strong>Color</strong><br />{product.basecolour}</p>
+    <p><strong>Inventory number</strong><br />${product.id}</p>
+    <br />
+    <br />
+
+    {
+      product.discount > 0 && (
+        <>
+          <span class="prev-price">DKK {product.price},-</span>
+          <br />
+        </>
+      )
+    }
+
+    <span class="current-price">{product.price - product.discount},-</span><br
+    />
+
+    <h1>Brand name</h1>
+    <p>{product.brandname}</p>
+  </section>
+
+  <aside class="purchase-box">
+    <h2>{product.productdisplayname}</h2>
+    <label for="size">Choose a size</label>
+    <select id="size">
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+    </select>
+    <button class="add-to-basket">Add to basket</button>
+  </aside>
+</section>
